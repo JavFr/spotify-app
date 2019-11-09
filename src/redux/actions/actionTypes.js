@@ -1,0 +1,5 @@
+export const GET_TOKEN = 'GET_TOKEN';
+
+export const SEARCH_ITEMS = 'SEARCH_ITEMS';
+export const SEARCH_IS_LOADING = 'SEARCH_IS_LOADING';
+export const SEARCH_UPDATE_RESULTS = 'SEARCH_UPDATE_RESULTS';

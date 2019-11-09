@@ -1,0 +1,30 @@
+import React from 'react';
+import { MDBContainer, MDBRow, MDBCol, MDBInput, MDBBtn } from "mdbreact";
+import SearchBar from './searchBar';
+import SearchList  from './searchList';
+import SearchOptions from './searchOptions';
+
+const SearchSection = (props) => {
+
+    const search = (query) => {
+        props.searchItems({
+        name: query,
+        type: 'track'
+      }, props.token)
+    }
+      
+    return(
+        <MDBContainer>
+            <MDBRow>
+                <MDBCol size='12'>
+                    <SearchBar onChange={(query) => search(query)} isLoading={props.searchIsLoading}/>
+                </MDBCol>
+                <MDBCol size='12'>
+                    <SearchList items={props.resultOfSearch}/>
+                </MDBCol>
+            </MDBRow>
+        </MDBContainer>
+    );
+}
+
+export default SearchSection;
