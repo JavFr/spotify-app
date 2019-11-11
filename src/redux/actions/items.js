@@ -33,6 +33,7 @@ export const searchUpdateResults = (results) => {
     type: SEARCH_UPDATE_RESULTS,
     payload: results.tracks.items.map((item) => {
                 return { 
+                  id: item.id,
                   name: item.name, 
                   album: item.album.name, 
                   preview_url: item.preview_url, 

@@ -6,6 +6,7 @@ import * as $ from 'jquery';
 
 import SearchSection from './containers/searchSection';
 import ModalLogin from './components/loginComponent';
+import Playlist from './components/playlistSection';
 
 import './App.css';
 import { MDBContainer, MDBCol, MDBRow, MDBBtn } from 'mdbreact';
@@ -50,14 +51,15 @@ class App extends Component {
 
   render() {
     return(
-      <MDBContainer fluid className="App fluid">
+      <MDBContainer fluid className="App fluid p-0">
         <ModalLogin isOpen={!this.props.token} />
         { this.props.token && (
-        <MDBRow className=''>
+        <MDBRow className='no-gutters'>
           <MDBCol size='6' md='4'>
             <SearchSection />
           </MDBCol>
-          <MDBCol size='6' md='4'>        
+          <MDBCol size='6' md='4'>    
+            <Playlist />    
           </MDBCol>
         </MDBRow>
         )}

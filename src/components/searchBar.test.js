@@ -35,8 +35,8 @@ describe('Search Bar tests', () => {
         const wrapper = shallow((<SearchBar isLoading={true} />));
 
         expect(wrapper.contains(
-                <div class="spinner-border spinner-border-sm" role="status">
-                    <span class="sr-only">Loading...</span>
+                <div className="spinner-border spinner-border-sm" role="status">
+                    <span className="sr-only">Loading...</span>
                 </div>
             )).toEqual(true);
     });
