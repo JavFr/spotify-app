@@ -1,4 +1,8 @@
-import { GET_TOKEN } from './actionTypes';
+import { GET_TOKEN, GET_USER_DATA } from './actionTypes';
+import * as $ from 'jquery';
+
+
+
 
 export const getToken = () => {
 
@@ -18,3 +22,29 @@ export const getToken = () => {
         payload: hash.access_token
     }
 };
+
+export const retrieveUserData = (token) => (dispatch) => {
+
+    $.ajax({
+        url: 'https://api.spotify.com/v1/me',
+        type: "GET",
+        beforeSend: (xhr) => {
+          xhr.setRequestHeader('Authorization', 'Bearer ' + token);
+        },
+        success: (data) => {
+            //data.hasOwnProperty('tracks') ? items = items.concat(data.tracks) : data.hasOwnProperty('artists') ? items = items.concat(data.artists) : items = []
+            dispatch(getUserData(data));
+        }
+      })
+}
+
+export const getUserData = (data) => {
+
+    return {
+        type: GET_USER_DATA,
+        payload: data
+    }
+}
+
+
+

@@ -3,10 +3,12 @@ import ReduxThunk from 'redux-thunk';
 
 import { loginReducer } from './reducers/login';
 import { reducer } from './reducers/reducer';
+import { playlistReducer } from './reducers/playlist';
 
 export default function() {
     return createStore(
             combineReducers({
+                playlistReducer,
                 loginReducer,
                 reducer
             }),

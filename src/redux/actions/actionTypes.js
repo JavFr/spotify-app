@@ -1,5 +1,15 @@
+
 export const GET_TOKEN = 'GET_TOKEN';
+export const GET_USER_DATA = 'GET_USER_DATA';
+export const LOGIN = 'LOGIN';
 
 export const SEARCH_ITEMS = 'SEARCH_ITEMS';
 export const SEARCH_IS_LOADING = 'SEARCH_IS_LOADING';
 export const SEARCH_UPDATE_RESULTS = 'SEARCH_UPDATE_RESULTS';
+
+/*PLAYLIST*/
+export const CREATE_PLAYLIST = 'CREATE_PLAYLIST';
+export const GET_USER_PLAYLISTS = 'GET_USER_PLAYLISTS';
+export const CHOOSE_PLAYLIST = 'CHOOSE_PLAYLIST';
+export const LOAD_TRACKS = 'LOAD_TRACKS';
+export const ADD_TRACKS = 'ADD_TRACKS';

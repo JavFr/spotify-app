@@ -1,8 +1,8 @@
 import React from 'react';
-import { MDBContainer, MDBRow, MDBCol, MDBInput, MDBBtn } from "mdbreact";
+import { MDBContainer, MDBRow, MDBCol } from "mdbreact";
 import SearchBar from './searchBar';
 import SearchList  from './searchList';
-import SearchOptions from './searchOptions';
+
 
 const SearchSection = (props) => {
 

@@ -7,14 +7,30 @@ const Playlist = (props) => {
     const [createModal, setCreateModal] = useState({isOpen: false});
     const [chooseModal, setChooseModal] = useState({isOpen: false});
 
+    const createPlaylist = (data) => {
+        props.createPlaylist(data, props.token, props.userId);
+        setCreateModal({isOpen: false});
+    }
+
+    const openPlaylistModal = () => {
+        props.getUserPlaylists(props.token, props.userId);
+        setChooseModal({isOpen: true});
+    }
+
+    const onChooseSumbit = (id) => {
+        props.choosePlaylist(id, props.token);
+        setChooseModal({isOpen: false});
+    }
+
     return (
         <MDBContainer className='bg-warning' style={{minHeight: '100vh'}}>
-            {!props.playlist? 
-                <OpenOrCreatePlaylist createPlaylist={() => setCreateModal({isOpen: true})} openPlaylist={() => { setChooseModal({isOpen: true}); alert('dispatch function');  }} />
-                : <PlaylistTopMenu title={props.playlist.name} />
+            {!props.playlist || props.playlist.length > 1? 
+                <OpenOrCreatePlaylist createPlaylist={() => setCreateModal({isOpen: true})} openPlaylist={() => openPlaylistModal() } />
+                : <div><PlaylistTopMenu title={props.playlist.name} />
+                    <RenderPlaylist items={props.tracks}/></div>
             }
-            <CreatePlaylistModal toggle={() => setCreateModal(!createModal.isOpen)} isOpen={createModal.isOpen} />
-            <ChoosePlaylistModal toggle={() => setChooseModal(!chooseModal.isOpen)} isOpen={chooseModal.isOpen} isLoading={props.chooseIsLoading} />
+            <CreatePlaylistModal toggle={() => setCreateModal(!createModal.isOpen)} isOpen={createModal.isOpen} submit={(data) => createPlaylist(data)}/>
+            <ChoosePlaylistModal toggle={() => setChooseModal(!chooseModal.isOpen)} isOpen={chooseModal.isOpen} isLoading={props.chooseIsLoading} submit={(id) => onChooseSumbit(id)} items={props.playlist}/>
         </MDBContainer>
     );
 }
@@ -54,10 +70,10 @@ export const RenderPlaylist = (props) => {
         <MDBContainer>
             <MDBListGroup style={{ width: "22rem" }}>
                 {props.items && props.items.length? props.items.map((item) => {
-                    return (<MDBListGroupItem key={item.id} className="d-flex justify-content-between align-items-center text-dark">
+                    return (<MDBListGroupItem key={item.track.id} className="d-flex justify-content-between align-items-center text-dark">
                         <div>
-                            {item.name}<br/> 
-                            <small>{item.artist} - {item.album}</small>
+                            {item.track.name}<br/> 
+                            <small>{item.track.artists[0].name} - {item.track.album.name}</small>
                         </div>
                         <div>
                         <MDBBtn floating flat style={{'boxShadow': 'none'}} color='transparent' size='lg' onClick={() => props.onClickTrash(item.id)} >
@@ -76,7 +92,7 @@ export const RenderPlaylist = (props) => {
 
 export const CreatePlaylistModal = (props) => {
     const [data, setFormData] = useState({
-        title: '',
+        name: '',
         description: '',
         public: false
     });
@@ -87,11 +103,11 @@ export const CreatePlaylistModal = (props) => {
                 <MDBModalHeader toggle={props.toggle}>Create a new Playlist</MDBModalHeader>
                 <MDBModalBody>
                     <form>
-                        <MDBInput id='ModalPlaylistTitle' label="Title" />
-                        <MDBInput type="textarea" label="Description" rows="4" />
+                        <MDBInput onChange={(event) => setFormData({...data, name: event.target.value})} id='ModalPlaylistTitle' label="Title" />
+                        <MDBInput onChange={(event) => setFormData({...data, description: event.target.value})} type="textarea" label="Description" rows="4" />
                         <MDBBtnGroup>
-                            <MDBBtn onClick={() => setFormData({public: false})} className={!data.public? 'active' : ''} color="default" size="lg">Private</MDBBtn>
-                            <MDBBtn onClick={() => setFormData({public: true})} className={data.public? 'active' : ''} color="default" size="lg">Public</MDBBtn>
+                            <MDBBtn onClick={() => setFormData({...data, public: false})} className={!data.public? 'active' : ''} color="default" size="lg">Private</MDBBtn>
+                            <MDBBtn onClick={() => setFormData({...data, public: true})} className={data.public? 'active' : ''} color="default" size="lg">Public</MDBBtn>
                         </MDBBtnGroup>
                     </form>
                 </MDBModalBody>
@@ -117,7 +133,7 @@ export const ChoosePlaylistModal = (props) => {
                     <MDBListGroup>
                         {props.items && props.items.length? props.items.map((item) => {
                             return(
-                                <MDBListGroupItem className={item.id == playlist.id? 'active' : ''} hover key={item.id} onClick={() => setPlaylist({id: item.id})}>
+                                <MDBListGroupItem className={item.id === playlist.id? 'active' : ''} hover key={item.id} onClick={() => setPlaylist({id: item.id})}>
                                     {item.name}
                                 </MDBListGroupItem>
                             )
@@ -135,7 +151,7 @@ export const ChoosePlaylistModal = (props) => {
                 </MDBModalBody>
                 <MDBModalFooter>
                 <MDBBtn color="secondary" onClick={props.toggle}>Close</MDBBtn>
-                <MDBBtn color="primary" className={ !playlist.id? 'disabled' : ''} onClick={() => props.submit(playlist)}>Create</MDBBtn>
+                <MDBBtn color="primary" className={ !playlist.id? 'disabled' : ''} onClick={() => props.submit(playlist.id)}>Choose</MDBBtn>
                 </MDBModalFooter>
             </MDBModal>
         </MDBContainer>
