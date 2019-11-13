@@ -23,7 +23,7 @@ const Playlist = (props) => {
     }
 
     return (
-        <MDBContainer className='bg-warning' style={{minHeight: '100vh'}}>
+        <MDBContainer style={{minHeight: '100vh', backgroundColor: '#37474F'}} className='pt-2'>
             {!props.playlist || props.playlist.length > 1? 
                 <OpenOrCreatePlaylist createPlaylist={() => setCreateModal({isOpen: true})} openPlaylist={() => openPlaylistModal() } />
                 : <div><PlaylistTopMenu title={props.playlist.name} />
@@ -49,10 +49,11 @@ export const OpenOrCreatePlaylist = (props) => {
 
 export const PlaylistTopMenu = (props) => {
     return(
-        <MDBContainer className='bg-success z-depth-1 text-white px-2 py-1'>
+        <MDBContainer className='bg-info z-depth-1 text-white px-2 py-1'>
             <MDBRow className='align-items-center justify-content-between'>
                 <MDBCol className='d-flex align-items-center justify-content-between px-5'>
                     <h1 className='text-white'>{props.title}</h1>
+                    { false? 
                     <div>
                         <MDBBtn floating flat style={{'boxShadow': 'none'}} color='transparent' size='lg'>
                             <MDBIcon far  icon="save" size="2x" />
@@ -61,6 +62,7 @@ export const PlaylistTopMenu = (props) => {
                             <MDBIcon far  icon="edit" size="2x" />
                         </MDBBtn>
                     </div>
+                    : ''}
                 </MDBCol>
             </MDBRow>
         </MDBContainer>
@@ -70,22 +72,27 @@ export const PlaylistTopMenu = (props) => {
 export const RenderPlaylist = (props) => {
 
     return(
-        <MDBContainer>
-            <MDBListGroup style={{ width: "22rem" }}>
+        <MDBContainer className='pt-3' style={{overflowY: 'scroll', maxHeight: '100vh'}} >
+            <MDBListGroup >
                 {props.items && props.items.length? props.items.map((item) => {
                     return (<MDBListGroupItem key={item.track.id} className="d-flex justify-content-between align-items-center text-dark">
                         <div>
                             {item.track.name}<br/> 
                             <small>{item.track.artists[0].name} - {item.track.album.name}</small>
                         </div>
+                       
                         <div>
                         <MDBBtn floating flat style={{'boxShadow': 'none'}} color='transparent' size='lg' onClick={() => props.removeTrack(item.track)} >
                             <MDBIcon far  icon="trash-alt" size="2x" />
                         </MDBBtn>
+                        { false? 
                         <MDBBtn floating flat style={{'boxShadow': 'none'}} color='transparent' size='lg' onClick={() => props.onClickInfo(item.id)} >
                             <MDBIcon icon="info" size='2x'/>
                         </MDBBtn>  
+                        : ''
+                    }
                         </div>
+                        
                     </MDBListGroupItem>)
                 }) : ''}
             </MDBListGroup>

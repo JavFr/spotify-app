@@ -8,30 +8,33 @@ import { MDBListGroup, MDBListGroupItem, MDBContainer, MDBMedia, MDBCol, MDBRow,
 const SearchList = (props) =>   {
 
     return(
-        <MDBContainer>
-            <MDBMedia list className="mt-3">                  
+        <MDBContainer fluid className='mx-0 px-0'>
+            <MDBMedia list className="mt-3 px-0 mx-0" style={{overflowY: 'scroll', maxHeight: '85vh', overflowX: 'hidden'}}>                  
                     { (props.items && props.items.length)? 
                         props.items.map((item) => {
                             return (                                    
                                 <MDBMedia tag="li" className='my-2' key={item.id}>
-                                    <MDBRow>
+                                    <MDBRow className='align-items-center'>
                                         <MDBCol size={4}>     
                                             <MDBView className='hover'>
                                                 <img className="media-image img-fluid" src={item.image.url} alt={item.album}/>
                                                 { item.preview_url? <PlayButton source={item.preview_url} id={item.id}/> : ''}
                                             </MDBView>
                                         </MDBCol>
-                                        <MDBCol size={8}>
+                                        <MDBCol size={6}>
                                             <MDBMedia body>
                                                 <MDBMedia heading>
                                                     {item.name}
                                                 </MDBMedia>
                                                     {item.artist} - {item.album}
-                                                    <AddTrackButton allowPress={props.allowAdd} onClick={() => props.addToPlaylist(item)}/>
                                             </MDBMedia>
+                                        </MDBCol>
+                                        <MDBCol size={1}>
+                                            <AddTrackButton allowPress={props.allowAdd} onClick={() => props.addToPlaylist(item)}/>
                                         </MDBCol>  
                                     </MDBRow>
                                 </MDBMedia>
+                                
                             );
                         }) : ''
                     }
@@ -82,8 +85,9 @@ const AddTrackButton = (props) => {
         <MDBBtn className={props.allowPress? '' : 'disabled'} 
             floating flat style={{'boxShadow': 'none'}} 
             color='transparent' size='lg' 
-            onClick={() => props.onClick()}>
-            <MDBIcon style={{opacity: '.8'}} icon="plus" size='5x' className='white-text'/>
+            onClick={() => props.onClick()}
+            >
+            <MDBIcon style={{opacity: '.8'}} icon="plus" size='2x' className='white-text'/>
         </MDBBtn>
     );
 }

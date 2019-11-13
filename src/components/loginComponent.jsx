@@ -7,16 +7,16 @@ const ModalLogin = (props) => {
     return (
         <MDBContainer>
             <MDBModal isOpen={props.isOpen}>
-                <MDBModalHeader>Para continuar, es necesario que inicies sesión en Spotify</MDBModalHeader>
+                <MDBModalHeader className='bg-default text-white'>Welcome! <br />In order to check out this site, an spotify's authentication it's needed.</MDBModalHeader>
                 <MDBModalBody>
-                Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore
-                magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
-                consequat.
+                    <strong>About this site</strong><br/>
+                    This is a very simple web app that you can use to manage your Spotify's playlists. It's free of charge, and I
+                    created it just to practice with Spotify API. This is an alpha version. <br />Thanks!
                 </MDBModalBody>
                 <MDBModalFooter>
                     <MDBBtn 
                         tag="a"
-                        color="primary" 
+                        color="default" 
                         href={`${authEndpoint}?client_id=${clientId}&redirect_uri=${redirectUri}&scope=${scopes.join("%20")}&response_type=token&show_dialog=true`}>
                         Login to Spotify
                     </MDBBtn>

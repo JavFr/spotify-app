@@ -14,7 +14,7 @@ const SearchSection = (props) => {
     }
       
     return(
-        <MDBContainer className='bg-default' style={{'minHeight': '100vh'}}>
+        <MDBContainer style={{'minHeight': '100vh', backgroundColor: '#263238'}} className='text-white'>
             <MDBRow>
                 <MDBCol size='12'>
                     <SearchBar onChange={(query) => search(query)} isLoading={props.searchIsLoading}/>
