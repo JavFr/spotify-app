@@ -27,6 +27,7 @@ const SearchList = (props) =>   {
                                                     {item.name}
                                                 </MDBMedia>
                                                     {item.artist} - {item.album}
+                                                    <AddTrackButton allowPress={props.allowAdd} onClick={() => props.addToPlaylist(item)}/>
                                             </MDBMedia>
                                         </MDBCol>  
                                     </MDBRow>
@@ -73,6 +74,17 @@ const PlayButton = (props) => {
                 <source src={props.source} />
             </audio>
         </MDBMask>
+    );
+}
+
+const AddTrackButton = (props) => {
+    return (
+        <MDBBtn className={props.allowPress? '' : 'disabled'} 
+            floating flat style={{'boxShadow': 'none'}} 
+            color='transparent' size='lg' 
+            onClick={() => props.onClick()}>
+            <MDBIcon style={{opacity: '.8'}} icon="plus" size='5x' className='white-text'/>
+        </MDBBtn>
     );
 }
 

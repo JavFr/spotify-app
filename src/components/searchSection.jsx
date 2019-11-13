@@ -20,7 +20,7 @@ const SearchSection = (props) => {
                     <SearchBar onChange={(query) => search(query)} isLoading={props.searchIsLoading}/>
                 </MDBCol>
                 <MDBCol size='12'>
-                    <SearchList items={props.resultOfSearch}/>
+                    <SearchList items={props.resultOfSearch} addToPlaylist={(track) => props.addTrackToPlaylist(track, props.playlist.id, props.token)} allowAdd={props.playlist}/>
                 </MDBCol>
             </MDBRow>
         </MDBContainer>

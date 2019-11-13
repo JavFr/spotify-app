@@ -16,6 +16,10 @@ export const searchItems = (query, token) => (dispatch) => {
         success: (data) => {
             //data.hasOwnProperty('tracks') ? items = items.concat(data.tracks) : data.hasOwnProperty('artists') ? items = items.concat(data.artists) : items = []
             dispatch(searchUpdateResults(data));
+        },
+        error: (jqXHR, textStatus, errorThrown) => {
+          const error = new Error(errorThrown + ': ' + textStatus);
+          console.log(error.message);
         }
       })
 

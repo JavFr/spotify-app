@@ -27,7 +27,10 @@ const Playlist = (props) => {
             {!props.playlist || props.playlist.length > 1? 
                 <OpenOrCreatePlaylist createPlaylist={() => setCreateModal({isOpen: true})} openPlaylist={() => openPlaylistModal() } />
                 : <div><PlaylistTopMenu title={props.playlist.name} />
-                    <RenderPlaylist items={props.tracks}/></div>
+                    <RenderPlaylist items={props.tracks} 
+                        removeTrack={(track) => props.removeTrack(track, props.playlist.id, props.token)}
+                        loading={props.tracksLoading}
+                        /></div>
             }
             <CreatePlaylistModal toggle={() => setCreateModal(!createModal.isOpen)} isOpen={createModal.isOpen} submit={(data) => createPlaylist(data)}/>
             <ChoosePlaylistModal toggle={() => setChooseModal(!chooseModal.isOpen)} isOpen={chooseModal.isOpen} isLoading={props.chooseIsLoading} submit={(id) => onChooseSumbit(id)} items={props.playlist}/>
@@ -76,7 +79,7 @@ export const RenderPlaylist = (props) => {
                             <small>{item.track.artists[0].name} - {item.track.album.name}</small>
                         </div>
                         <div>
-                        <MDBBtn floating flat style={{'boxShadow': 'none'}} color='transparent' size='lg' onClick={() => props.onClickTrash(item.id)} >
+                        <MDBBtn floating flat style={{'boxShadow': 'none'}} color='transparent' size='lg' onClick={() => props.removeTrack(item.track)} >
                             <MDBIcon far  icon="trash-alt" size="2x" />
                         </MDBBtn>
                         <MDBBtn floating flat style={{'boxShadow': 'none'}} color='transparent' size='lg' onClick={() => props.onClickInfo(item.id)} >
@@ -86,6 +89,11 @@ export const RenderPlaylist = (props) => {
                     </MDBListGroupItem>)
                 }) : ''}
             </MDBListGroup>
+            {props.loading? 
+                <div className="spinner-border spinner-border-sm" role="status">
+                    <span className="sr-only">Loading...</span>
+                </div> :
+                ''}
         </MDBContainer>
     );
 }
